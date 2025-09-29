@@ -26,8 +26,12 @@ namespace ClientHub.Application
             return cliente;
         }
 
-        public void CreateCliente(ClienteDTO clienteDto)
+        public async Task<bool> CreateCliente(ClienteDTO clienteDto)
         {
+            bool exists = await _clienteRepository.ExistsByCpfCnpj(clienteDto.CPF_CNPJ);
+            if (exists)
+                return false;
+
             var cliente = new Cliente
             {
                 Nome = clienteDto.Nome,
@@ -41,12 +45,13 @@ namespace ClientHub.Application
                 CidadeId = clienteDto.CidadeId
             };
 
-            _clienteRepository.Add(cliente);
+            await _clienteRepository.Add(cliente);
+            return true;
         }
 
-        public void DeleteCliente(int id)
+        public async Task DeleteCliente(int id)
         {
-            _clienteRepository.Delete(id);
+            await _clienteRepository.Delete(id);
         }
 
         public async Task UpdateCliente(ClienteDTO clienteDto)

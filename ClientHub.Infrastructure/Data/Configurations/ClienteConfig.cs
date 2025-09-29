@@ -1,4 +1,6 @@
 ﻿using ClientHub.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace ClientHub.Infrastructure
@@ -12,7 +14,16 @@ namespace ClientHub.Infrastructure
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.Nome).HasColumnName("nome").HasMaxLength(80).IsRequired();
             Property(x => x.CEP).HasColumnName("cep").HasMaxLength(8).IsRequired();
-            Property(x => x.CpfCnpjValue).HasColumnName("cpf_cnpj").HasMaxLength(14).IsRequired();
+            Property(x => x.CpfCnpjValue)
+            .HasColumnName("cpf_cnpj")
+            .HasMaxLength(14)
+            .IsRequired()
+            .HasColumnAnnotation(
+                IndexAnnotation.AnnotationName,
+                new IndexAnnotation(
+                    new IndexAttribute("IX_CpfCnpj") { IsUnique = true }
+                )
+            );
             Property(x => x.Endereco).HasColumnName("endereco").HasMaxLength(100).IsRequired();
             Property(x => x.Numero).HasColumnName("numero").HasMaxLength(20).IsRequired();
             Property(x => x.Complemento).HasColumnName("complemento").HasMaxLength(60);

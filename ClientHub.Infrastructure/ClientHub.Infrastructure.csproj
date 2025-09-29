@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202509281618103_Versao2.00.Designer.cs">
       <DependentUpon>202509281618103_Versao2.00.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509291904004_Versao3.00.cs" />
+    <Compile Include="Migrations\202509291904004_Versao3.00.Designer.cs">
+      <DependentUpon>202509291904004_Versao3.00.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
@@ -94,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202509281618103_Versao2.00.resx">
       <DependentUpon>202509281618103_Versao2.00.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509291904004_Versao3.00.resx">
+      <DependentUpon>202509291904004_Versao3.00.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

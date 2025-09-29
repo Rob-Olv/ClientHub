@@ -53,16 +53,26 @@ namespace ClientHub.App.Forms
                     await _clienteService.UpdateCliente(clienteDto);
 
                     MessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    DialogResult = DialogResult.OK;
+                    Close();
                 }
                 else
                 {
-                    _clienteService.CreateCliente(clienteDto);
+                    bool success = await _clienteService.CreateCliente(clienteDto);
 
-                    MessageBox.Show("Cliente adicionado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (success)
+                    {
+                        MessageBox.Show("Cliente adicionado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        DialogResult = DialogResult.OK;
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("CPF/CNPJ já existe na base de dados.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
-
-                DialogResult = DialogResult.OK;
-                Close();
             }
             catch(Exception ex)
             {
@@ -203,11 +213,13 @@ namespace ClientHub.App.Forms
 
             if (string.IsNullOrEmpty(cep)) return;
 
+            lblLoading.Visible = true;
             var dados = await ConsultarCepAsync(cep);
 
             if (dados == null || dados.Erro == "true")
             {
                 MessageBox.Show("CEP inválido.");
+                lblLoading.Visible = false;
                 return;
             }
 
@@ -220,6 +232,8 @@ namespace ClientHub.App.Forms
             {
                 cmbCidade.SelectedValue = cidade.Id;
             }
+
+            lblLoading.Visible = false;
         }
 
         public async Task<ViaCepResponse> ConsultarCepAsync(string cep)

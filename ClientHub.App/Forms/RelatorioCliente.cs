@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinApp = System.Windows.Forms;
 
 namespace ClientHub.App.Forms
 {
@@ -61,15 +63,21 @@ namespace ClientHub.App.Forms
         private void AbrirRelatorio(List<ClienteDTO> clientes)
         {
             Report report = new Report();
-            report.Load("RelatorioClientes.frx");
+            string reportPath = Path.Combine(WinApp.Application.StartupPath, "RelatorioClientes.frx");
+            report.Load(reportPath);
 
             report.RegisterData(clientes, "Clientes");
             report.GetDataSource("Clientes").Enabled = true;
 
+            string pastaRelatorio = Path.Combine(WinApp.Application.StartupPath, "Relatorios");
+            if (!Directory.Exists(pastaRelatorio))
+                Directory.CreateDirectory(pastaRelatorio);
+
+            string caminhoPdf = Path.Combine(pastaRelatorio, "RelatorioClientes.pdf");
+
             if (report.Prepare())
             {
                 PDFExport export = new PDFExport();
-                string caminhoPdf = "RelatorioClientes.pdf";
                 report.Export(export, caminhoPdf);
 
                 Process.Start(new ProcessStartInfo

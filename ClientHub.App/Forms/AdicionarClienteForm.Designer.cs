@@ -49,6 +49,7 @@
             this.rbCPF = new System.Windows.Forms.RadioButton();
             this.rbCNPJ = new System.Windows.Forms.RadioButton();
             this.cmbCidade = new System.Windows.Forms.ComboBox();
+            this.lblLoading = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtNome
@@ -229,11 +230,22 @@
             this.cmbCidade.Size = new System.Drawing.Size(99, 21);
             this.cmbCidade.TabIndex = 8;
             // 
+            // lblLoading
+            // 
+            this.lblLoading.AutoSize = true;
+            this.lblLoading.Location = new System.Drawing.Point(39, 107);
+            this.lblLoading.Name = "lblLoading";
+            this.lblLoading.Size = new System.Drawing.Size(77, 13);
+            this.lblLoading.TabIndex = 27;
+            this.lblLoading.Text = "Pesquisando...";
+            this.lblLoading.Visible = false;
+            // 
             // AdicionarClienteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(226, 294);
+            this.Controls.Add(this.lblLoading);
             this.Controls.Add(this.cmbCidade);
             this.Controls.Add(this.rbCNPJ);
             this.Controls.Add(this.rbCPF);
@@ -287,5 +299,6 @@
         private System.Windows.Forms.RadioButton rbCPF;
         private System.Windows.Forms.RadioButton rbCNPJ;
         private System.Windows.Forms.ComboBox cmbCidade;
+        private System.Windows.Forms.Label lblLoading;
     }
 }

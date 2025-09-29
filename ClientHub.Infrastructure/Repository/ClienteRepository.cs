@@ -1,6 +1,7 @@
 ﻿using ClientHub.Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,20 +13,20 @@ namespace ClientHub.Infrastructure
         {
         }
 
-        public void Add(Cliente cliente)
+        public async Task Add(Cliente cliente)
         {
             DbContext.Clientes.Add(cliente);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var cliente = DbContext.Clientes.Find(id);
 
             if (cliente != null)
             {
                 DbContext.Clientes.Remove(cliente);
-                DbContext.SaveChanges();
+                await DbContext.SaveChangesAsync();
             }
         }
 
@@ -89,6 +90,12 @@ namespace ClientHub.Infrastructure
                 .FirstOrDefault();
 
             return lastCreateClient;
+        }
+
+        public async Task<bool> ExistsByCpfCnpj(string cpfCnpj)
+        {
+            return await DbContext.Clientes
+                .AnyAsync(c => c.CpfCnpjValue == cpfCnpj);
         }
     }
 }

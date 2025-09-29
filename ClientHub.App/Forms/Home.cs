@@ -11,6 +11,10 @@ namespace ClientHub.App.Forms
         private readonly CidadeService _cidadeService;
         private readonly EstadoService _estadoService;
         private readonly RelatorioService _relatorioService;
+        private Label lblBemVindo;
+        private Label lblTotalClientes;
+        private Label lblUltimoClienteCad;
+        private Label lblDataUltimoCad;
         public Home(ClienteService clienteService, CidadeService cidadeService, EstadoService estadoService, RelatorioService relatorioService)
         {
             InitializeComponent();
@@ -27,26 +31,26 @@ namespace ClientHub.App.Forms
             pn_Dashboard.FlowDirection = FlowDirection.TopDown;
             pn_Dashboard.Padding = new Padding(20);
 
-            Label lblBemVindo = new Label()
+            lblBemVindo = new Label()
             {
                 Text = "Bem-vindo ao ClientHub!",
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 AutoSize = true
             };
 
-            Label lblTotalClientes = new Label()
+            lblTotalClientes = new Label()
             {
                 Text = $"Número de clientes cadastrados: {_clienteService.GetCountAllClients()}",
                 AutoSize = true
             };
 
-            Label lblUltimoClienteCad = new Label()
+            lblUltimoClienteCad = new Label()
             {
                 Text = $"Último cliente cadastrado: {_clienteService.GetLastClient()}",
                 AutoSize = true
             };
 
-            Label lblDataUltimoCad = new Label()
+            lblDataUltimoCad = new Label()
             {
                 Text = $"Data do último cadastro: {_clienteService.GetLastCreateClient():dd/MM/yyyy}",
                 AutoSize = true
@@ -80,6 +84,13 @@ namespace ClientHub.App.Forms
         private void barButtonItem3_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             Close();
+        }
+
+        private void btnRefresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            lblTotalClientes.Text = $"Número de clientes cadastrados: {_clienteService.GetCountAllClients()}";
+            lblUltimoClienteCad.Text = $"Último cliente cadastrado: {_clienteService.GetLastClient()}";
+            lblDataUltimoCad.Text = $"Data do último cadastro: {_clienteService.GetLastCreateClient():dd/MM/yyyy}";
         }
     }
 }

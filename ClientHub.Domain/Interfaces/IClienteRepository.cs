@@ -12,8 +12,9 @@ namespace ClientHub.Domain
         int GetCountAllClients();
         string GetLastClient();
         DateTime GetLastDateCreateClient();
-        void Add(Cliente cliente);
+        Task Add(Cliente cliente);
         Task Update(Cliente cliente);
-        void Delete(int id);
+        Task Delete(int id);
+        Task<bool> ExistsByCpfCnpj(string cpfCnpj);
     }
 }
