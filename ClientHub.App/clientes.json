@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Nome": "Maria da Silva",
+    "CPF_CNPJ": "123.456.789-00",
+    "CEP": "30123-456",
+    "Bairro": "Centro",
+    "CidadeNome": "Belo Horizonte",
+    "EstadoNome": "Minas Gerais"
+  },
+  {
+    "Id": 2,
+    "Nome": "João Souza",
+    "CPF_CNPJ": "987.654.321-00",
+    "CEP": "04567-890",
+    "Bairro": "Moema",
+    "CidadeNome": "São Paulo",
+    "EstadoNome": "São Paulo"
+  }
+]

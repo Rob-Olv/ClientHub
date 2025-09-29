@@ -18,6 +18,7 @@ namespace ClientHub.Infrastructure
             Property(x => x.Complemento).HasColumnName("complemento").HasMaxLength(60);
             Property(x => x.Bairro).HasColumnName("bairro").HasMaxLength(100).IsRequired();
             Property(x => x.DataNascimento).HasColumnName("data_nascimento");
+            Property(x => x.CriadoEm).HasColumnName("criado_em").IsRequired();
 
             Property(x => x.CidadeId).HasColumnName("cidadeId");
             HasRequired(x => x.Cidade).WithMany(x => x.Clientes).HasForeignKey(c => c.CidadeId).WillCascadeOnDelete(false);

@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClientHubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cidade">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="estadoId" Type="int" Nullable="false" />
+          <Property Name="criado_em" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="cep" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="endereco" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="numero" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="complemento" Type="nvarchar" MaxLength="60" />
+          <Property Name="bairro" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="data_nascimento" Type="datetime" Nullable="false" />
+          <Property Name="cidadeId" Type="int" Nullable="false" />
+          <Property Name="cpf_cnpj" Type="nvarchar" MaxLength="14" Nullable="false" />
+          <Property Name="criado_em" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uf" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="criado_em" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_cidade_dbo_estado_estadoId">
+          <End Role="estado" Type="Self.estado" Multiplicity="1" />
+          <End Role="cidade" Type="Self.cidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cidade">
+              <PropertyRef Name="estadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_cliente_dbo_cidade_cidadeId">
+          <End Role="cidade" Type="Self.cidade" Multiplicity="1" />
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cidade">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="cidadeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClientHubModelStoreContainer">
+          <EntitySet Name="cidade" EntityType="Self.cidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estado" EntityType="Self.estado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_cidade_dbo_estado_estadoId" Association="Self.FK_dbo_cidade_dbo_estado_estadoId">
+            <End Role="estado" EntitySet="estado" />
+            <End Role="cidade" EntitySet="cidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_cliente_dbo_cidade_cidadeId" Association="Self.FK_dbo_cliente_dbo_cidade_cidadeId">
+            <End Role="cidade" EntitySet="cidade" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClientHubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cep" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="endereco" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numero" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="complemento" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="bairro" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="data_nascimento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cidadeId" Type="Int32" Nullable="false" />
+          <Property Name="cpf_cnpj" Type="String" MaxLength="14" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="criado_em" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="cidade" Relationship="ClientHubModel.FK_dbo_cliente_dbo_cidade_cidadeId" FromRole="cliente" ToRole="cidade" />
+        </EntityType>
+        <EntityContainer Name="ClientHubEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clientes" EntityType="Self.cliente" />
+          <EntitySet Name="cidades" EntityType="ClientHubModel.cidade" />
+          <AssociationSet Name="FK_dbo_cliente_dbo_cidade_cidadeId" Association="ClientHubModel.FK_dbo_cliente_dbo_cidade_cidadeId">
+            <End Role="cidade" EntitySet="cidades" />
+            <End Role="cliente" EntitySet="clientes" />
+          </AssociationSet>
+          <EntitySet Name="estadoes" EntityType="ClientHubModel.estado" />
+          <AssociationSet Name="FK_dbo_cidade_dbo_estado_estadoId" Association="ClientHubModel.FK_dbo_cidade_dbo_estado_estadoId">
+            <End Role="estado" EntitySet="estadoes" />
+            <End Role="cidade" EntitySet="cidades" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="cidade">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="estadoId" Type="Int32" Nullable="false" />
+          <Property Name="criado_em" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="clientes" Relationship="ClientHubModel.FK_dbo_cliente_dbo_cidade_cidadeId" FromRole="cidade" ToRole="cliente" />
+          <NavigationProperty Name="estado" Relationship="ClientHubModel.FK_dbo_cidade_dbo_estado_estadoId" FromRole="cidade" ToRole="estado" />
+        </EntityType>
+        <Association Name="FK_dbo_cliente_dbo_cidade_cidadeId">
+          <End Type="ClientHubModel.cidade" Role="cidade" Multiplicity="1" />
+          <End Type="ClientHubModel.cliente" Role="cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cidade">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="cidadeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="estado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uf" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="criado_em" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="cidades" Relationship="ClientHubModel.FK_dbo_cidade_dbo_estado_estadoId" FromRole="estado" ToRole="cidade" />
+        </EntityType>
+        <Association Name="FK_dbo_cidade_dbo_estado_estadoId">
+          <End Type="ClientHubModel.estado" Role="estado" Multiplicity="1" />
+          <End Type="ClientHubModel.cidade" Role="cidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cidade">
+              <PropertyRef Name="estadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClientHubModelStoreContainer" CdmEntityContainer="ClientHubEntities1">
+          <EntitySetMapping Name="clientes">
+            <EntityTypeMapping TypeName="ClientHubModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="cep" ColumnName="cep" />
+                <ScalarProperty Name="endereco" ColumnName="endereco" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="complemento" ColumnName="complemento" />
+                <ScalarProperty Name="bairro" ColumnName="bairro" />
+                <ScalarProperty Name="data_nascimento" ColumnName="data_nascimento" />
+                <ScalarProperty Name="cidadeId" ColumnName="cidadeId" />
+                <ScalarProperty Name="cpf_cnpj" ColumnName="cpf_cnpj" />
+                <ScalarProperty Name="criado_em" ColumnName="criado_em" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cidades">
+            <EntityTypeMapping TypeName="ClientHubModel.cidade">
+              <MappingFragment StoreEntitySet="cidade">
+                <ScalarProperty Name="criado_em" ColumnName="criado_em" />
+                <ScalarProperty Name="estadoId" ColumnName="estadoId" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estadoes">
+            <EntityTypeMapping TypeName="ClientHubModel.estado">
+              <MappingFragment StoreEntitySet="estado">
+                <ScalarProperty Name="criado_em" ColumnName="criado_em" />
+                <ScalarProperty Name="uf" ColumnName="uf" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

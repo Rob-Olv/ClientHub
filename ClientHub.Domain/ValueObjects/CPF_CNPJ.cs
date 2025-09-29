@@ -73,7 +73,7 @@ namespace ClientHub.Domain
                 sum += int.Parse(tempCpf[i].ToString()) * multiplicator2[i];
 
             rest = sum % 11;
-            if (rest > 2)
+            if (rest < 2)
                 rest = 0;
             else
                 rest = 11 - rest;

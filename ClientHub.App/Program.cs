@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using ClientHub.App.Forms;
+using ClientHub.Application;
+using ClientHub.Infrastructure;
+using System;
+using WinApp = System.Windows.Forms;
 
 namespace ClientHub.App
 {
@@ -14,9 +14,23 @@ namespace ClientHub.App
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            WinApp.Application.EnableVisualStyles();
+            WinApp.Application.SetCompatibleTextRenderingDefault(false);
+
+            var dbContext = new AppDbContext();
+
+            var clienteRepository = new ClienteRepository(dbContext);
+            var cidadeRepository = new CidadeRepository(dbContext);
+            var estadoRepository = new EstadoRepository(dbContext);
+
+            var clienteService = new ClienteService(clienteRepository);
+            var cidadeService = new CidadeService(cidadeRepository);
+            var estadoService = new EstadoService(estadoRepository);
+            var relatorioService = new RelatorioService(clienteRepository);
+
+            var homeForm = new Home(clienteService, cidadeService, estadoService, relatorioService);
+
+            WinApp.Application.Run(homeForm);
         }
     }
 }

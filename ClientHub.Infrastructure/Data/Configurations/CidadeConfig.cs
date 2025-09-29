@@ -11,6 +11,7 @@ namespace ClientHub.Infrastructure
             HasKey(c => c.Id);
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.Nome).HasColumnName("nome").HasMaxLength(50).IsRequired();
+            Property(x => x.CriadoEm).HasColumnName("criado_em").IsRequired();
 
             Property(x => x.EstadoId).HasColumnName("estadoId");
             HasRequired(x => x.Estado).WithMany(x => x.Cidades).WillCascadeOnDelete(false);

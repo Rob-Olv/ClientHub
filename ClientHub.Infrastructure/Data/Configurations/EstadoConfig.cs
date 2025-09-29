@@ -12,6 +12,7 @@ namespace ClientHub.Infrastructure
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.Nome).HasColumnName("nome").HasMaxLength(50).IsRequired();
             Property(x => x.Uf).HasColumnName("uf").HasMaxLength(2).IsRequired();
+            Property(x => x.CriadoEm).HasColumnName("criado_em").IsRequired();
         }
     }
 }
